@@ -46,4 +46,20 @@ public class Bank {
 	public ArrayList<Branch> getBranches(){
 		return branches;
 	}
+
+	public boolean addTransactionToCustomer(Customer customer, Transaction transaction){
+		if(customer.getTransactions().isEmpty()){
+			customer.getTransactions().add(transaction);
+			return true;
+		}else{
+			for(int i=0; i<customer.getTransactions().size(); i++){
+				Transaction t = customer.getTransactions().get(i);
+				if(t.getID() != transaction.getID()){
+					customer.getTransactions().add(transaction);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
