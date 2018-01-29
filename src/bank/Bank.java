@@ -51,13 +51,19 @@ public class Bank {
 		if(customer.getTransactions().isEmpty()){
 			customer.getTransactions().add(transaction);
 			return true;
-		}else{
-			for(int i=0; i<customer.getTransactions().size(); i++){
-				Transaction t = customer.getTransactions().get(i);
-				if(t.getID() != transaction.getID()){
-					customer.getTransactions().add(transaction);
-					return true;
-				}
+		}
+		if(!transactionAlreadyExists(customer, transaction)){
+			customer.getTransactions().add(transaction);
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean transactionAlreadyExists(Customer customer, Transaction transaction){
+		for(int i=0; i<customer.getTransactions().size(); i++){
+			Transaction t = customer.getTransactions().get(i);
+			if(t.getID().equals(transaction.getID())){
+				return true;
 			}
 		}
 		return false;
