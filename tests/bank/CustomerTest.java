@@ -13,7 +13,7 @@ public class CustomerTest {
 
 	@Before
 	public void before(){
-		customer = new Customer("John", "Smith", "23456543", "45-43-12");
+		customer = new Customer("John", "Smith", "23456543", "45-43-12", "33211234");
 		branch = new Branch("EH12322", "EH10LP");
 		bank = new Bank();
 		bank.addBranch(branch);

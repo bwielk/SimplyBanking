@@ -68,4 +68,24 @@ public class Bank {
 		}
 		return false;
 	}
+
+	public boolean addCustomerToBranch(Customer customer, Branch branch) {
+		if(branchAlreadyExists(branch) && !customerAlreadyExists(customer)){
+			branch.getCustomers().add(customer);
+			return true;
+		}
+		return false;
+	}
+
+	private boolean customerAlreadyExists(Customer customer) {
+		for(int i=0; i<branches.size(); i++){
+			ArrayList<Customer> customers = branches.get(i).getCustomers();
+			for(int n=0; n<customers.size(); n++){
+				if(customer.getID().equals(customers.get(n).getID())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

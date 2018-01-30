@@ -8,14 +8,16 @@ public class Customer {
 	private String surname;
 	private String accountNo;
 	private String sortCode;
+	private String id;
 	private ArrayList<Transaction> transactions;
 	
-	public Customer(String name, String surname, String accountNo, String sortCode){
+	public Customer(String name, String surname, String accountNo, String sortCode, String id){
 		this.name = name;
 		this.surname = surname;
 		this.accountNo = accountNo;
 		this.sortCode = sortCode;
 		this.transactions = new ArrayList<Transaction>();
+		this.id = id;
 	}
 
 	public String getName(){
@@ -36,5 +38,9 @@ public class Customer {
 
 	public ArrayList<Transaction> getTransactions() {
 		return transactions;
+	}
+
+	public String getID() {
+		return id;
 	}
 }
