@@ -1,6 +1,7 @@
 package bank;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bank {
 	
@@ -14,20 +15,6 @@ public class Bank {
 		if(!branchAlreadyExists(branch)){
 			branches.add(branch);
 			return true;
-		}
-		return false;
-	}
-
-	public int allBranches() {
-		return branches.size();
-	}
-	
-	private boolean branchAlreadyExists(Branch branch){
-		for(int i=0; i<branches.size(); i++){
-			Branch branchToEvaluate = branches.get(i);
-			if(branchToEvaluate.getId() == branch.getId() || branchToEvaluate.getPostcode() == branch.getPostcode()){
-				return true;
-			}
 		}
 		return false;
 	}
@@ -58,6 +45,24 @@ public class Bank {
 		}
 		return false;
 	}
+
+	public boolean addCustomerToBranch(Customer customer, Branch branch) {
+		if(branchAlreadyExists(branch) && !customerAlreadyExists(customer)){
+			branch.getCustomers().add(customer);
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean branchAlreadyExists(Branch branch){
+		for(int i=0; i<branches.size(); i++){
+			Branch branchToEvaluate = branches.get(i);
+			if(branchToEvaluate.getId() == branch.getId() || branchToEvaluate.getPostcode() == branch.getPostcode()){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	private boolean transactionAlreadyExists(Customer customer, Transaction transaction){
 		for(int i=0; i<customer.getTransactions().size(); i++){
@@ -65,14 +70,6 @@ public class Bank {
 			if(t.getID().equals(transaction.getID())){
 				return true;
 			}
-		}
-		return false;
-	}
-
-	public boolean addCustomerToBranch(Customer customer, Branch branch) {
-		if(branchAlreadyExists(branch) && !customerAlreadyExists(customer)){
-			branch.getCustomers().add(customer);
-			return true;
 		}
 		return false;
 	}
@@ -87,5 +84,20 @@ public class Bank {
 			}
 		}
 		return false;
+	}
+
+	public HashMap<Customer, String> findCustomerBySurname(String surname) {
+		HashMap<Customer, String> results = new HashMap<Customer, String>();
+		for(int i=0; i<branches.size(); i++){
+			Branch currentBranch = branches.get(i);
+			ArrayList<Customer> customers = currentBranch.getCustomers();
+			for(int n=0; n<customers.size(); n++){
+				Customer currentCustomer = customers.get(n);
+				if(surname.equals(currentCustomer.getSurname())){
+					results.put(currentCustomer, currentBranch.getId());
+				}
+			}
+		}
+		return results;
 	}
 }

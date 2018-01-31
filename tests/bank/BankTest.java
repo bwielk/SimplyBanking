@@ -2,6 +2,9 @@ package bank;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +37,7 @@ public class BankTest {
 	public void bankCanStoreBranchesWithDifferentIds(){
 		bank.addBranch(branch1);
 		bank.addBranch(branch2);
-		assertEquals(2, bank.allBranches());
+		assertEquals(2, bank.getBranches().size());
 	}
 	
 	@Test
@@ -43,7 +46,7 @@ public class BankTest {
 		bank.addBranch(branch5);
 		bank.addBranch(branch1);
 		bank.addBranch(branch4);
-		assertEquals(2, bank.allBranches());
+		assertEquals(2, bank.getBranches().size());
 	}
 	
 	@Test
@@ -51,11 +54,11 @@ public class BankTest {
 		bank.addBranch(branch1);
 		bank.addBranch(branch2);
 		bank.addBranch(new Branch("WC43212", "WC189FF"));
-		assertEquals(3, bank.allBranches());
+		assertEquals(3, bank.getBranches().size());
 		bank.removeBranchByID("EH19938");
-		assertEquals(2, bank.allBranches());
+		assertEquals(2, bank.getBranches().size());
 		bank.removeBranchByID(branch2.getId());
-		assertEquals(1, bank.allBranches());
+		assertEquals(1, bank.getBranches().size());
 		assertEquals("WC43212", bank.getBranches().get(0).getId());
 	}
 	
@@ -80,5 +83,28 @@ public class BankTest {
 		assertEquals(false, bank.addCustomerToBranch(customer1, branch1));
 		assertEquals(2, branch2.getCustomers().size());
 		assertEquals(1, branch1.getCustomers().size());
+	}
+	
+	private Customer getCustomerByBranchID(HashMap<Customer, String>list, String id){
+		for(Customer customer : list.keySet()){
+			if(list.get(customer).equals(id)){
+				return customer;
+			}
+		}
+		return null;
+	}
+	
+	@Test
+	public void bankCanFindACustomerByItsSurname(){
+		bank.addBranch(branch1);
+		bank.addBranch(branch2);
+		assertEquals(true, bank.addCustomerToBranch(customer1, branch2));
+		assertEquals(true, bank.addCustomerToBranch(customer2, branch2));
+		assertEquals(true, bank.addCustomerToBranch(customer3, branch1));
+		Customer customer4 = new Customer("John", "Doe", "23123539", "07-32-99", "10897432");
+		assertEquals(true, bank.addCustomerToBranch(customer4, branch1));
+		HashMap<Customer, String> results = bank.findCustomerBySurname("Doe");
+		assertEquals(2, results.size());
+		assertEquals("John", getCustomerByBranchID(results, "EH130RP").getName());
 	}
 }
