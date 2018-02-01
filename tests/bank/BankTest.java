@@ -108,4 +108,21 @@ public class BankTest {
 		assertEquals("LA48553", results.get(customer1));
 		assertEquals("EH19938", results.get(customer4));
 	}
+	
+	@Test
+	public void bankCanFindACustomerByItsID(){
+		bank.addBranch(branch3);
+		bank.addBranch(branch2);
+		assertEquals(true, bank.addCustomerToBranch(customer1, branch2));
+		assertEquals(true, bank.addCustomerToBranch(customer2, branch3));
+		assertEquals(true, bank.addCustomerToBranch(customer3, branch2));
+		Customer customer4 = new Customer("John", "Doe", "23123539", "07-32-99", "10897432");
+		assertEquals(true, bank.addCustomerToBranch(customer4, branch3));
+		HashMap<Customer, String> results1 = bank.findCustomerById("10897432");
+		assertEquals(1, results1.size());
+		assertEquals("LA12553", results1.get(customer4));
+		HashMap<Customer, String> results2 = bank.findCustomerById("12239342");
+		assertEquals("LA48553", results2.get(customer3));
+		assertEquals(1, results2.size());
+	}
 }

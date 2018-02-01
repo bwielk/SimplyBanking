@@ -86,16 +86,32 @@ public class Bank {
 		return false;
 	}
 
-	public HashMap findCustomerBySurname(String surname) {
+	public HashMap findCustomerBySurname(String surname){
 		HashMap<Customer, String> results = new HashMap<Customer, String>();
 		for(int i=0; i<branches.size(); i++){
 			Branch currentBranch = branches.get(i);
-			String id = currentBranch.getId();
+			String branchID = currentBranch.getId();
 			ArrayList<Customer> customers = currentBranch.getCustomers();
 			for(int n=0; n<customers.size(); n++){
 				Customer currentCustomer = customers.get(n);
 				if(surname.equals(currentCustomer.getSurname())){
-					results.put(currentCustomer, id);
+					results.put(currentCustomer, branchID);
+				}
+			}
+		}
+		return results;
+	}
+	
+	public HashMap findCustomerById(String id){
+		HashMap<Customer, String> results = new HashMap<Customer, String>();
+		for(int i=0; i<branches.size(); i++){
+			Branch currentBranch = branches.get(i);
+			String branchID = currentBranch.getId();
+			ArrayList<Customer> customers = currentBranch.getCustomers();
+			for(int n=0; n<customers.size(); n++){
+				Customer currentCustomer = customers.get(n);
+				if(id.equals(currentCustomer.getID())){
+					results.put(currentCustomer, branchID);
 				}
 			}
 		}
