@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class BankTest {
 
-	private Bank bank;
+	private Bank bank = null;
 	private Branch branch1;
 	private Branch branch2;
 	private Branch branch3;
@@ -35,6 +35,26 @@ public class BankTest {
 		customer3 = new Customer("Daniel", "Birmin", "03473728", "23-77-81", "12239342");
 	}
 	
+	//INTERNAL METHODS
+	public void prepareBankForCustomerSearch(){
+		bank.addBranch(branch3);
+		bank.addBranch(branch2);
+		assertEquals(true, bank.addCustomerToBranch(customer1, branch2));
+		assertEquals(true, bank.addCustomerToBranch(customer2, branch3));
+		assertEquals(true, bank.addCustomerToBranch(customer3, branch2));
+	}
+
+	private Customer getCustomerByBranchID(HashMap<Customer, String>list, String id){
+		for(Customer customer : list.keySet()){
+			if(customer.equals(id)){
+				return customer;
+			}
+		}
+		return null;
+	}
+	
+	//TESTS
+	
 	@Test
 	public void bankCanStoreBranchesWithDifferentIds(){
 		bank.addBranch(branch1);
@@ -44,6 +64,9 @@ public class BankTest {
 		assertEquals(2, bank.getBranches().size());
 		bank.addBranch(branch3);
 		assertEquals(3, bank.getBranches().size());
+		Branch newBranch = new Branch("CA1240N", "CA124NN");
+		bank.addBranch(newBranch);
+		assertEquals(4, bank.getBranches().size());
 	}
 	
 	@Test
@@ -53,6 +76,10 @@ public class BankTest {
 		bank.addBranch(branch1);
 		bank.addBranch(branch4);
 		assertEquals(2, bank.getBranches().size());
+		bank.addBranch(branch3);
+		assertEquals(3, bank.getBranches().size());
+		bank.addBranch(branch3);
+		assertEquals(3, bank.getBranches().size());
 	}
 	
 	@Test
@@ -91,15 +118,7 @@ public class BankTest {
 		assertEquals(1, branch1.getCustomers().size());
 	}
 	
-	private Customer getCustomerByBranchID(HashMap<Customer, String>list, String id){
-		for(Customer customer : list.keySet()){
-			if(customer.equals(id)){
-				return customer;
-			}
-		}
-		return null;
-	}
-	
+	//SEARCHING FOR A CUSTOMER BY ITS SURNAME
 	@Test
 	public void bankCanFindACustomerByItsSurname(){
 		bank.addBranch(branch1);
@@ -115,14 +134,7 @@ public class BankTest {
 		assertEquals("EH19938", results.get(customer4));
 	}
 	
-	public void prepareBankForCustomerSearch(){
-		bank.addBranch(branch3);
-		bank.addBranch(branch2);
-		assertEquals(true, bank.addCustomerToBranch(customer1, branch2));
-		assertEquals(true, bank.addCustomerToBranch(customer2, branch3));
-		assertEquals(true, bank.addCustomerToBranch(customer3, branch2));
-	}
-	
+	//SEARCHING FOR A CUSTOMER BY ITS ID
 	@Test
 	public void bankCanFindACustomerByItsID(){
 		System.out.println("bankCanFindACustomerByItsID");

@@ -115,7 +115,6 @@ public class Bank {
 				}
 			}
 		}
-		System.out.println(results.toString());
 		return results;
 	}
 }
