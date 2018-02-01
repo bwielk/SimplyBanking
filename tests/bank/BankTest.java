@@ -87,7 +87,7 @@ public class BankTest {
 	
 	private Customer getCustomerByBranchID(HashMap<Customer, String>list, String id){
 		for(Customer customer : list.keySet()){
-			if(list.get(customer).equals(id)){
+			if(customer.equals(id)){
 				return customer;
 			}
 		}
@@ -105,6 +105,7 @@ public class BankTest {
 		assertEquals(true, bank.addCustomerToBranch(customer4, branch1));
 		HashMap<Customer, String> results = bank.findCustomerBySurname("Doe");
 		assertEquals(2, results.size());
-		assertEquals("John", getCustomerByBranchID(results, "EH130RP").getName());
+		assertEquals("LA48553", results.get(customer1));
+		assertEquals("EH19938", results.get(customer4));
 	}
 }
