@@ -57,7 +57,7 @@ public class Bank {
 	private boolean branchAlreadyExists(Branch branch){
 		for(int i=0; i<branches.size(); i++){
 			Branch branchToEvaluate = branches.get(i);
-			if(branchToEvaluate.getId() == branch.getId() || branchToEvaluate.getPostcode() == branch.getPostcode()){
+			if(branchToEvaluate.getId() == branch.getId()){
 				return true;
 			}
 		}
@@ -102,7 +102,7 @@ public class Bank {
 		return results;
 	}
 	
-	public HashMap findCustomerById(String id){
+	public HashMap<Customer, String> findCustomerById(String id){
 		HashMap<Customer, String> results = new HashMap<Customer, String>();
 		for(int i=0; i<branches.size(); i++){
 			Branch currentBranch = branches.get(i);
@@ -115,6 +115,7 @@ public class Bank {
 				}
 			}
 		}
+		System.out.println(results.toString());
 		return results;
 	}
 }
